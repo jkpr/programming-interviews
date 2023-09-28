@@ -1,0 +1,7 @@
+<%= form_with model: task, url: task_path(task), method: :put do |form| %>
+    <% if task.completed %>
+        <%= form.submit "Mark pending" %>
+    <% else %>
+        <%= form.submit "Mark complete" %>
+    <% end %>
+<% end %>

@@ -1,0 +1,72 @@
+<style>
+.filter-active {
+    background-color: khaki
+}
+</style>
+<main>
+    <h1>Kadince To-do app</h1>
+
+    <h2>Create new to-do item</h2>
+    <%= form_for(Task.new) do |form| %>
+        New task: <%= form.text_field :description %>
+        <%= form.submit %>
+    <% end %>
+
+    <h2>Filters</h2>
+    <ul>
+        <li><button class="filter filter-active" id="filter-all">All</button></li>
+        <li><button class="filter" id="filter-pending">Pending</button></li>
+        <li><button class="filter" id="filter-complete">Complete</button></li>
+    </ul>
+
+    <div id="pending">
+        <h2>Pending</h2>
+        <ul>
+        <% @pending_tasks.each do |task| %>
+            <%= render "task", task: task %>
+        <% end %>
+        </ul>
+    </div>
+
+    <div id="complete">
+        <h2>Complete</h2>
+        <ul>
+        <% @completed_tasks.each do |task| %>
+            <%= render "task", task: task %>
+        <% end %>
+        </ul>
+    </div>
+</main>
+<script>
+    const filterActiveClass = 'filter-active';
+    const filterAll = document.querySelector('#filter-all');
+    const filterPending = document.querySelector('#filter-pending');
+    const filterComplete = document.querySelector('#filter-complete');
+    const pending = document.querySelector('#pending');
+    const complete = document.querySelector('#complete');
+
+    function clearFilters() {
+        const filters = document.querySelectorAll('.filter');
+        filters.forEach(f => f.classList.remove(filterActiveClass));
+        pending.style.display = 'block';
+        complete.style.display = 'block';
+    }
+
+    filterAll.addEventListener('click', function(e) {
+        if (this.classList.contains(filterActiveClass)) return
+        clearFilters();
+        this.classList.add(filterActiveClass);
+    });
+
+    filterPending.addEventListener('click', function(e) {
+        clearFilters();
+        this.classList.add(filterActiveClass);
+        complete.style.display = 'none';
+    });
+
+    filterComplete.addEventListener('click', function(e) {
+        clearFilters();
+        this.classList.add(filterActiveClass);
+        pending.style.display = 'none';
+    });
+</script>

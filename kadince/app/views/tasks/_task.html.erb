@@ -1,0 +1,8 @@
+<li id="<%= task.id %>">
+    <%= task.description %>
+    <div>
+    <%= link_to "Edit", edit_task_path(task.id) %>
+    </div>
+    <%= render "destroy_form", task: task %>
+    <%= render "update_form", task: task %>
+</li>
